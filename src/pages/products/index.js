@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-//import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline'; 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar'; 
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
+import FormControl from "@material-ui/core/FormControl"; 
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import Container from '@material-ui/core/Container';
-import Avatar from '@material-ui/core/Avatar';
-//import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar'; 
+import Radio from '@material-ui/core/Radio';
 import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
@@ -41,6 +43,7 @@ export default function Products(props) {
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm')); 
   const [state, setstate] = useState([])
   const [search, setSearch] = useState('')
+  const [filter, setFilter] = useState('nombre')
 
 
   useEffect(() => {
@@ -60,7 +63,8 @@ export default function Products(props) {
   }
 
   const onChangeText = e => setSearch(e.target.value)
- 
+  
+  const onChangeFilter = e => setFilter(e.target.value)
 
   const onChangeScreen = () => history.push('newProduct/new')
 
@@ -91,13 +95,19 @@ export default function Products(props) {
   }
 
 
-  // const handlePage = async (e) => {
-  //   try {
-  //     console.log('hola mundo')
-  //   }catch (error) {
-  //     console.log('Error: ', error)
-  //   }
-  // }; 
+  const handleSearch = async (e) => {
+    try { 
+      if (e.key === "Enter") { 
+        const res = await axios.post('/api/searchProduct', { filter: filter, query: search })
+        const data = await res.data.products 
+        console.log(data)
+        //setstate(data)
+        setSearch('')
+      }
+    }catch (error) {
+      console.log('Error to find products: ', error)
+    }
+  }; 
 
   return (
     <div className={classes.root}>
@@ -119,6 +129,9 @@ export default function Products(props) {
                     root: classes.inputRoot,
                     input: classes.inputInput,
                   }}
+                  onKeyPress={handleSearch}
+                  value={search}
+                  onChange={onChangeText}
                   inputProps={{ 'aria-label': 'search' }}
                 />
               </div> 
@@ -132,11 +145,13 @@ export default function Products(props) {
               <div className={classes.searchIcon}> <SearchIcon /> </div>
               <InputBase
                 placeholder="Buscar…"
-                onChange={onChangeText}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
+                onKeyPress={handleSearch}
+                value={search}
+                onChange={onChangeText}
                 inputProps={{ 'aria-label': 'search' }}
               />
             </div>
@@ -150,6 +165,17 @@ export default function Products(props) {
       <main className={classes.main}>
         <Container>
          <div className={classes.mainSpace}/>
+         <Grid item xs={12} className={classes.containerRadio} align='center'> 
+              <FormControl component="fieldset">
+              <Typography  noWrap variant="h6" component="h1" className={classes.subtittle}>Filtros</Typography>
+                <RadioGroup row name="activateProduct"  value={filter} onChange={onChangeFilter} className={classes.radioContainer}>
+                  <FormControlLabel className={classes.radioLabel} value="nombre" control={<Radio classes={{ root: classes.radiobutton, checked: classes.checked }}/>} label="Nombre" />
+                  <FormControlLabel className={classes.radioLabel} value="presentación" control={<Radio classes={{ root: classes.radiobutton, checked: classes.checked }}/>} label="Presentación" />
+                  <FormControlLabel className={classes.radioLabel} value="registro" control={<Radio classes={{ root: classes.radiobutton, checked: classes.checked }}/>} label="Registro Invima" />
+                </RadioGroup>
+              </FormControl>
+          </Grid>
+
           {/* <div>hola mundo</div>  */} 
           <Grid container spacing={3} className={classes.containerProducts}>
             {state.map((product, index) => 

@@ -34,6 +34,14 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1),
     },
   }, 
+  subtittle: {
+    color: '#461193',
+    fontWeight: 'bold'
+  }, 
+  radioContainer:{
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 
  
 
@@ -78,6 +86,35 @@ const useStyles = makeStyles((theme) => ({
 
   containerProducts:{
     margin: 0 
+  },
+
+  containerRadio:{
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+
+
+
+
+
+  radiobutton: {
+    color: "#461193",
+    "&$checked": {
+      color: "#461193",
+      "&:hover": {
+        color: "#461193",
+        backgroundColor: "#46119320",
+      },
+    },
+    "&:hover": {
+      color: "#461193",
+      backgroundColor: "#46119320",
+    },
+  },
+  checked: {},
+  radioLabel:{
+    color: "#461193",
+    fontWeight: 'bold',
   }
 
 
