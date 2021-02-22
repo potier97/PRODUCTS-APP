@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
       const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
       const { nameProduct, idProduct, count, mode, description, activateProduct} = req.body;
       const collection = await db.collection('products')
-      const newProducts = await collection.insert({ 
+      const newProducts = await collection.insertOne({ 
         name: nameProduct, 
         id: idProduct, 
         count: count, 
