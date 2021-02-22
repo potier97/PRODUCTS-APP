@@ -35,9 +35,9 @@ module.exports = async (req, res) => {
     await runMiddleware(req, res, cors) 
     if(req.method === "DELETE"){
       const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
-      const { _id } = req.body;
+      const { id } = req.body;
       const collection = await db.collection('products')
-      const deleteResponse = await collection.deleteOne({ _id: ObjectId(_id)  })
+      const deleteResponse = await collection.deleteOne({ _id: ObjectId(id)  })
       res.status(200).json({ deleteResponse, "error" : false })
       res.end();
     }else{

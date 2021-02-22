@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient
+var ObjectId = require('mongodb').ObjectID;
 const Cors = require('cors');
  
 const cors = Cors({
@@ -33,8 +34,8 @@ module.exports = async (req, res) => {
     await runMiddleware(req, res, cors) 
     if(req.method === "PUT"){
       const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
-      const { _id, nameProduct, idProduct, count, mode, description, activateProduct } = req.body;
-      var myquery = { _id: _id };
+      const { id, nameProduct, idProduct, count, mode, description, activateProduct } = req.body;
+      var myquery = { _id: ObjectId(id) };
       var newvalues = { $set: {
         name: nameProduct, 
         id: idProduct, 

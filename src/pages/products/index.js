@@ -14,6 +14,7 @@ import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'; 
 import AddIcon from '@material-ui/icons/Add';
 import Logo from '../../assets/images/logo.png' 
+import { useSnackbar } from 'notistack';
 //components
 import ScrollTop from '../../components/scrollTop';
 import ProductCard from '../../components/productCard'
@@ -36,6 +37,7 @@ export default function Products(props) {
   //HOOK NAVIGATION 
   const history = useHistory();
   const theme = useTheme();
+  const { enqueueSnackbar } = useSnackbar();
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm')); 
   const [state, setstate] = useState([])
   const [search, setSearch] = useState('')
@@ -69,10 +71,15 @@ export default function Products(props) {
 
   const onDeleteProduct = async e => {
     try{
-      const res = await axios.delete('/api/deleteProduct', {
-        _id: e,
-      }) 
+      const res = await axios.delete('/api/deleteProduct', { id: e}) 
       console.log('Res', res)
+      enqueueSnackbar('Producto Eliminado', { 
+        variant: 'error',
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'center',
+        }
+      });
 
     }catch(e){
       console.log('Error to get users: ', e)

@@ -12,6 +12,7 @@ import Radio from '@material-ui/core/Radio';
 import Grid from '@material-ui/core/Grid'; 
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';  
+import { useSnackbar } from 'notistack';
 //COMPONENTS
 import MuiTextField from '../../components/muiTextField';
 //AXIOS
@@ -19,7 +20,7 @@ import axios from 'axios';
 //NAVEGATION
 import { useHistory, useParams } from "react-router-dom";  
 //Styles
-import useStyles from './style'
+import useStyles from './style';
 
 const initialState = {
   id: '',
@@ -49,6 +50,7 @@ export default function newProduct() {
   //HOOK NAVIGATION 
   const history = useHistory();
   const { id } = useParams(); 
+  const { enqueueSnackbar } = useSnackbar();
   const [state, setState] = useState(initialState) 
   const [isNew, setIsNew] = useState(false) 
 
@@ -70,20 +72,18 @@ export default function newProduct() {
   //CARGAR LOS DATOS PARA SER MODIFICADOS
   const loadData = async () => {
     try {
-      const res = await axios.post('/api/loadProduct', {
-        id: id,
-      })
-      console.log('Res', res)
-      // setstate(prevState => ({
-      //   ...prevState,
-      //   id: res._id,
-      //   nameProduct: res.nameProduct, 
-      //   idProduct: res.idProduct, 
-      //   count: res.count, 
-      //   mode: res.mode,
-      //   description: res.description,
-      //   activateProduct: res.activateProduct
-      // }))
+      const res = await axios.post('/api/loadProduct', {  id: id, }) 
+      const data = await res.data.loadProduct
+      setstate(prevState => ({
+        ...prevState,
+        id: data._id,
+        nameProduct: data.nameProduct, 
+        idProduct: data.idProduct, 
+        count: data.count, 
+        mode: data.mode,
+        description: data.description,
+        activateProduct: data.activateProduct
+      }))
     } catch (e) {
       console.log('Errror to load Product:', e)
     }
@@ -198,15 +198,22 @@ export default function newProduct() {
             description: state.description,
             activateProduct: state.activateProduct
           })
-          console.log(res)
+          //console.log(res)
           if(res.status === 200){
+            enqueueSnackbar('Nuevo Producto Agregado', { 
+              variant: 'success',
+              anchorOrigin: {
+                vertical: 'top',
+                horizontal: 'center',
+              }
+            });
             setState(initialState)
             await onChangeScreen();
           }
         }else{
           console.log('esta actualizando')
           const res = await axios.put('/api/editProduct', {
-            _id: id,
+            id: id,
             nameProduct: state.nameProduct, 
             idProduct: state.idProduct, 
             count: state.count, 
@@ -215,7 +222,18 @@ export default function newProduct() {
             activateProduct: state.activateProduct
           })
           console.log(res)
-          await onChangeScreen();
+          if(res.status === 200){
+            enqueueSnackbar('Producto Editado', { 
+              variant: 'info',  
+              anchorOrigin: {
+                vertical: 'top',
+                horizontal: 'center',
+              }
+            });
+            setState(initialState)
+            await onChangeScreen();
+          }
+          
         }
       }
     } catch (e) {
