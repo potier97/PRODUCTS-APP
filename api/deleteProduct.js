@@ -29,7 +29,7 @@ export default async function connectToDatabase(uri) {
 
 module.exports = async (req, res) => { 
   try{
-    //await runMiddleware(req, res, cors) 
+    await runMiddleware(req, res, cors) 
     if(req.method === "POST"){
       const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
       const { id } = req.body;
@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
     }
   }catch(error){
     console.log("Error to delete prodcts: ", error)
-    res.status(200).json({ "message": "The request cannot be answered properly", "error" : true, "errorCode": error });
+    res.status(406).json({ "message": "The request cannot be answered properly", "error" : true, "errorCode": error });
     res.end();
   }
 }

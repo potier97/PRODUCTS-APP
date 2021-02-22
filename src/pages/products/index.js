@@ -71,18 +71,20 @@ export default function Products(props) {
 
   const onDeleteProduct = async e => {
     try{
-      const id = e
-      console.log('e', id)
+      const id = e 
       const res = await axios.post('/api/deleteProduct', { id: id}) 
-      const data = await res.data
-      console.log('Res', data)
-      enqueueSnackbar('Producto Eliminado', { 
-        variant: 'error',
-        anchorOrigin: {
-          vertical: 'top',
-          horizontal: 'center',
-        }
-      });
+      //const data = await res.data
+      //console.log('Res', data, data)
+      if(res.status === 200){
+        enqueueSnackbar('Producto Eliminado', { 
+          variant: 'error',
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'center',
+          }
+        });
+        await getData()
+      }
     }catch(e){
       console.log('Error to delete users: ', e)
     }
