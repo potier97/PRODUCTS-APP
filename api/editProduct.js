@@ -17,18 +17,21 @@ function runMiddleware(req, res, fn) {
 }
 
 module.exports = async (req, res) => { 
-  
-  await runMiddleware(req, res, cors) 
-  if(req.method === "POST"){
-    const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
-    const collection = await db.collection('products')
-    const products = await collection.find({}).toArray()
-    res.status(200).json({ products })
-    res.end();
-  }else{
-    console.log("Error:", err)
+  try{
+    await runMiddleware(req, res, cors) 
+    if(req.method === "POST"){
+      const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
+      const collection = await db.collection('products')
+      const products = await collection.find({}).toArray()
+      res.status(200).json({ products, "error" : false })
+      res.end();
+    }else{
+      res.status(400).json({ "message": "Error Query", "error" : true});
+      res.end();
+    }
+  }catch(e){
+    console.log("Error:", e)
     res.status(406).json({ "message": "The request cannot be answered properly", "error" : true });
     res.end();
   }
-  
 }
