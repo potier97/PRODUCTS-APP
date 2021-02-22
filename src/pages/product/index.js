@@ -42,8 +42,8 @@ export default function Product() {
 
   const getData = async () => {
     try{
-      const res = await axios.get('/api/loadProduct', {
-        idProduct: id,
+      const res = await axios.post('/api/loadProduct', {
+        id: id,
       })
       setstate({ 
         id: 'dfvdfvdfv', 

@@ -70,8 +70,8 @@ export default function newProduct() {
   //CARGAR LOS DATOS PARA SER MODIFICADOS
   const loadData = async () => {
     try {
-      const res = await axios.get('/api/loadProduct', {
-        idProduct: id,
+      const res = await axios.post('/api/loadProduct', {
+        id: id,
       })
       console.log('Res', res)
       // setstate(prevState => ({
@@ -189,8 +189,7 @@ export default function newProduct() {
     try {
       const validate = validateProduct();
       if(!validate){
-        if(isNew) {
-          console.log('es nuevo')
+        if(isNew) { 
           const res = await axios.post('/api/newProduct', {
             nameProduct: state.nameProduct, 
             idProduct: state.idProduct, 
@@ -200,7 +199,10 @@ export default function newProduct() {
             activateProduct: state.activateProduct
           })
           console.log(res)
-          //await onChangeScreen();
+          if(res.status === 200){
+            setState(initialState)
+            await onChangeScreen();
+          }
         }else{
           console.log('esta actualizando')
           const res = await axios.put('/api/editProduct', {
