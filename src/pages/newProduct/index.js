@@ -74,7 +74,7 @@ export default function newProduct() {
     try {
       const res = await axios.post('/api/loadProduct', {  id: id, }) 
       const data = await res.data.loadProduct
-      setstate(prevState => ({
+      setState(prevState => ({
         ...prevState,
         id: data._id,
         nameProduct: data.nameProduct, 
