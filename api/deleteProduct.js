@@ -7,7 +7,6 @@ const cors = Cors({
   origin: 'https://products.nipoanz.com',
 })
 
-
 function runMiddleware(req, res, fn) {
   return new Promise((resolve, reject) => {
       fn(req, res, (result) => {
@@ -37,7 +36,7 @@ module.exports = async (req, res) => {
       const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
       const { id } = req.body;
       const collection = await db.collection('products')
-      const deleteResponse = await collection.deleteOne({ _id: ObjectId(id)  })
+      const deleteResponse = await collection.remove({ _id: ObjectId(id)  })
       res.status(200).json({ deleteResponse, "error" : false })
       res.end();
     }else{
