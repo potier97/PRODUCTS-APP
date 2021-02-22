@@ -17,9 +17,9 @@ export default function productCard(props) {
     editCard,
     deleteCard,
     name= 'Medicina A',
-    amount= 3,
+    //amount= 3,
     description= 'Lorem Ipsum Dolor fen',
-    mode= 'Tabletas',
+    //mode= 'Tabletas',
     record= 'a1a2a3a4',
     disponible= 'activo'
   } = props;
