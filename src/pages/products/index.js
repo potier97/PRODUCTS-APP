@@ -51,6 +51,7 @@ export default function Products(props) {
       const data = await response.data
       setstate(data)
       //console.log('Res', data)
+      console.log(search)
     }catch(e){
       console.log('Error to get users: ', e)
     }
@@ -65,13 +66,13 @@ export default function Products(props) {
 
   const onEditProduct = e => history.push({ pathname: `/newProduct/${e}` })
 
-  const handlePage = async (e) => {
-    try {
-      console.log('hola mundo')
-    }catch (error) {
-      console.log('Error: ', error)
-    }
-  }; 
+  // const handlePage = async (e) => {
+  //   try {
+  //     console.log('hola mundo')
+  //   }catch (error) {
+  //     console.log('Error: ', error)
+  //   }
+  // }; 
 
   return (
     <div className={classes.root}>

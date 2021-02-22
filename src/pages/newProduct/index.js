@@ -15,7 +15,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 //COMPONENTS
 import MuiTextField from '../../components/muiTextField';
 //AXIOS
-import axios from 'axios';  
+//import axios from 'axios';  
 //NAVEGATION
 import { useHistory, useParams } from "react-router-dom";  
 //Styles
@@ -57,8 +57,13 @@ export default function newProduct() {
 
   //Validar si el formulario es para un nuevo producto o modificar un producto existente
   const onNewData = () => { 
-    if(id === 'new') setState(initialState)
-    else loadData()
+    if(id === 'new') {
+      setIsNew(true)
+      setState(initialState)
+    }else{
+      setIsNew(false)
+      loadData()
+    } 
   }
 
   //CARGAR LOS DATOS PARA SER MODIFICADOS
