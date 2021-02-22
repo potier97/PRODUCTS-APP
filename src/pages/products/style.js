@@ -43,6 +43,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center'
   },
 
+  resetIcon:{
+    color: '#fff',
+    backgroundColor: '#9D78C6',
+    '&:hover': {
+      backgroundColor: '#9D78C6',
+    },
+  },
+
  
 
   search: {

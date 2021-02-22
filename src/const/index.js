@@ -1,1 +1,1 @@
-export const PhotoThemes = "?pill,pills"
+export const PhotoThemes = "?pill,pills,medicine,pharmaceutical"

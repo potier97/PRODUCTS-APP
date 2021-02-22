@@ -9,6 +9,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar'; 
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import IconButton from '@material-ui/core/IconButton';
 import Radio from '@material-ui/core/Radio';
 import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
@@ -98,11 +100,15 @@ export default function Products(props) {
   const handleSearch = async (e) => {
     try { 
       if (e.key === "Enter") { 
-        const res = await axios.post('/api/searchProduct', { filter: filter, query: search })
-        const data = await res.data.products 
-        console.log(data)
-        //setstate(data)
-        setSearch('')
+        if(search.length > 0){
+          const res = await axios.post('/api/searchProduct', { filter: filter, query: search })
+          const data = await res.data.products 
+          console.log(data)
+          //setstate(data)
+          setSearch('')
+        }else{
+          await getData()
+        }
       }
     }catch (error) {
       console.log('Error to find products: ', error)
@@ -136,25 +142,38 @@ export default function Products(props) {
                 />
               </div> 
             </Grid>
-            <Typography  noWrap variant="h6" component="h1" className={classes.tittle}>
-              Productos
-            </Typography>
+
+            <Grid item  xs={4}  container direction="row" justify="flex-end" alignItems="center">
+              <IconButton onClick={getData} className={classes.resetIcon}>
+                <RotateLeftIcon />
+              </IconButton>
+              <Typography  noWrap variant="h6" component="h1" className={classes.tittle}>
+                Productos
+              </Typography>
+            </Grid>
           </Grid>: 
-          <Grid container direction="column" justify="center" alignItems="stretch" >
-            <div className={classes.search}>
-              <div className={classes.searchIcon}> <SearchIcon /> </div>
-              <InputBase
-                placeholder="Buscar…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                onKeyPress={handleSearch}
-                value={search}
-                onChange={onChangeText}
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </div>
+          <Grid container direction="row" justify="space-between" alignItems="center" >
+            <Grid item xs={9} >
+              <div className={classes.search}>
+                <div className={classes.searchIcon}> <SearchIcon /> </div>
+                <InputBase
+                  placeholder="Buscar…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  onKeyPress={handleSearch}
+                  value={search}
+                  onChange={onChangeText}
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={2} >
+              <IconButton onClick={getData} className={classes.resetIcon}>
+               <RotateLeftIcon />
+              </IconButton>
+            </Grid>
           </Grid>}
         </Toolbar>
       </AppBar>
