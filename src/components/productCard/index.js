@@ -43,7 +43,7 @@ export default function productCard(props) {
       <CardActions>
           <Button size="small" color="primary" variant="contained" onClick={openCard} >Saber Más</Button> 
           <Button size="small" color="primary" variant="contained" onClick={editCard} >Editar</Button> 
-          <Button size="small" color="warning" variant="contained" deleteCard={editCard} >Eliminar</Button> 
+          <Button size="small" color="warning" variant="contained" onClick={deleteCard} >Eliminar</Button> 
         </CardActions>
     </Card>
   );

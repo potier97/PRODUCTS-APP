@@ -16,13 +16,25 @@ import { useHistory, useParams } from "react-router-dom";
 //Styles
 import useStyles from './style'
 
+
+const initialState = {
+  id: '', 
+  nameProduct: '',
+  idProduct: '', 
+  count: 0, 
+  mode: '', 
+  description: '', 
+  activateProduct: 'activo', 
+}
+
+
 export default function Product() { 
 
   const classes = useStyles();
   //HOOK NAVIGATION 
   const history = useHistory();
   const { id } = useParams(); 
-  const [state, setstate] = useState({}) 
+  const [state, setstate] = useState(initialState) 
 
   useEffect(() => {
     getData() 
@@ -33,7 +45,16 @@ export default function Product() {
       const res = await axios.get('/api/loadProduct', {
         idProduct: id,
       })
-      //setstate(res)
+      setstate({ 
+        id: 'dfvdfvdfv', 
+        nameProduct: 'sdcsdc',
+        idProduct: 'sdcsc', 
+        count: 0, 
+        mode: 'dfsvcdfvdfvdf', 
+        description: 'dcsdcsdcsc', 
+        activateProduct: 'activo', 
+
+       })
       console.log('Res', res)
 
     }catch(e){
@@ -76,33 +97,33 @@ export default function Product() {
                 <Avatar alt="avatar" src={medicine} className={classes.avatar} imgProps={{ draggable: false}} />
               </Grid>
               <Grid item>
-                <Typography variant="h4" align='center' className={classes.title}>{state.name}</Typography>
+                <Typography variant="h4" align='center' className={classes.title}>{state.nameProduct}</Typography>
               </Grid> 
             </Grid>
             <Grid item md={9} container >
               <Grid item container className={classes.content}>
                 <Typography variant="h6" className={classes.aboutText}>
-                <span className={classes.title}>Registro Invima:</span>{` ${state.phone}`}
+                <span className={classes.title}>Registro Invima:</span>{` ${state.idProduct}`}
                 </Typography>
               </Grid>
               <Grid item container className={classes.content}>
                 <Typography variant="h6" className={classes.aboutText}>
-                <span className={classes.title}>Modo de Presentación:</span>{` ${state.website}`}
+                <span className={classes.title}>Modo de Presentación:</span>{` ${state.mode}`}
                 </Typography>
               </Grid>
               <Grid item container className={classes.content}>
                 <Typography variant="h6" className={classes.aboutText}>
-                <span className={classes.title}>STOCK:</span>{` ${state.id}`}
+                <span className={classes.title}>STOCK:</span>{` ${state.count}`}
                 </Typography>
               </Grid>
               <Grid item container className={classes.content}>
                 <Typography variant="h6" className={classes.aboutText}>
-                <span className={classes.title}>Disponibilidad:</span>{` ${state.id === 'activo' ? 'Si' : 'No' }`}
+                <span className={classes.title}>Disponibilidad:</span>{` ${state.activateProduct === 'activo' ? 'Si' : 'No' }`}
                 </Typography>
               </Grid>
               <Grid item container className={classes.content}>
                 <Typography variant="h6" className={classes.aboutText}>
-                <span className={classes.title}>Acerca de:</span>{` ${state.name}`}
+                <span className={classes.title}>Acerca de:</span>{` ${state.description}`}
                 </Typography>
               </Grid>
             </Grid>

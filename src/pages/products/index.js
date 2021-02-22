@@ -51,7 +51,7 @@ export default function Products(props) {
       //const response = await axios.get('https://jsonplaceholder.typicode.com/users')
       //const data = await response.data
       setstate(res)
-      //console.log('Res', data)
+      console.log('search', search)
     }catch(e){
       console.log('Error to get users: ', e)
     }
