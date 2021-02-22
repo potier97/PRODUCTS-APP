@@ -27,7 +27,7 @@ let theme = createMuiTheme({
     },
     warning: {
       //light: light,
-      main: main,
+      main: '#ef5350',
       //dark: dark,
     },
     success: {

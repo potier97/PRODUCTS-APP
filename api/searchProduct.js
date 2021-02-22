@@ -2,7 +2,7 @@ const MongoClient = require('mongodb').MongoClient
 const Cors = require('cors');
 
 const cors = Cors({
-  methods: ['POST', 'HEAD'], 
+  methods: ['GET', 'HEAD'], 
   origin: 'https://products.nipoanz.com',
 })
  
@@ -30,10 +30,11 @@ export default async function connectToDatabase(uri) {
 module.exports = async (req, res) => { 
   try{
     await runMiddleware(req, res, cors) 
-    if(req.method === "POST"){
+    if(req.method === "GET"){
       const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
+      const { query } = req.body;
       const collection = await db.collection('products')
-      const products = await collection.find({}).toArray()
+      const products = await collection.find(query)
       res.status(200).json({ products, "error" : false })
       res.end();
     }else{

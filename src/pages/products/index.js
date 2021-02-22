@@ -47,11 +47,11 @@ export default function Products(props) {
 
   const getData = async () => {
     try{
-      const response = await axios.get('https://jsonplaceholder.typicode.com/users')
-      const data = await response.data
-      setstate(data)
+      const res = await axios.get('/api/products')
+      //const response = await axios.get('https://jsonplaceholder.typicode.com/users')
+      //const data = await response.data
+      setstate(res)
       //console.log('Res', data)
-      console.log(search)
     }catch(e){
       console.log('Error to get users: ', e)
     }
@@ -66,6 +66,20 @@ export default function Products(props) {
 
   const onEditProduct = e => history.push({ pathname: `/newProduct/${e}` })
 
+
+  const onDeleteProduct = async e => {
+    try{
+      const res = await axios.delete('/api/deleteProduct', {
+        _id: e,
+      }) 
+      console.log('Res', res)
+
+    }catch(e){
+      console.log('Error to get users: ', e)
+    }
+  }
+
+
   // const handlePage = async (e) => {
   //   try {
   //     console.log('hola mundo')
@@ -79,8 +93,7 @@ export default function Products(props) {
       <CssBaseline />
       <AppBar 
         color="secondary" 
-        position="sticky" 
-        //className={classes.appBar}
+        position="sticky"  
         elevation={8}>
         <Toolbar className={classes.toolbar} id="back-to-top-anchor">
 
@@ -133,13 +146,14 @@ export default function Products(props) {
                 <Grid container>
                   <ProductCard 
                     name={product.name}
-                    amount={product.id}
-                    mode={product.website}
-                    record={product.phone}
-                    disponible={product.phone}
-                    description={" Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. ."}
-                    openCard={() => onViewProduct(product.id)}
-                    editCard={() => onEditProduct(product.id)}
+                    record={product.id}
+                    amount={product.count}
+                    mode={product.mode}
+                    disponible={product.activateProduct}
+                    description={product.description}
+                    openCard={() => onViewProduct(product._id)}
+                    editCard={() => onEditProduct(product._id)}
+                    deleteCard={() => onDeleteProduct(product._id)}
                   />
                 </Grid>
               </Grid>

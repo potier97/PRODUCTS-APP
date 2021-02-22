@@ -30,10 +30,12 @@ export default function Product() {
 
   const getData = async () => {
     try{
-      const response = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
-      const data = await response.data
-      setstate(data)
-      console.log('Res', data)
+      const res = await axios.get('/api/loadProduct', {
+        idProduct: id,
+      })
+      //setstate(res)
+      console.log('Res', res)
+
     }catch(e){
       console.log('Error to get users: ', e)
     }

@@ -15,6 +15,7 @@ export default function productCard(props) {
   const {
     openCard,
     editCard,
+    deleteCard,
     name= 'Medicina A',
     amount= 3,
     description= 'Lorem Ipsum Dolor fen',
@@ -42,6 +43,7 @@ export default function productCard(props) {
       <CardActions>
           <Button size="small" color="primary" variant="contained" onClick={openCard} >Saber Más</Button> 
           <Button size="small" color="primary" variant="contained" onClick={editCard} >Editar</Button> 
+          <Button size="small" color="warning" variant="contained" deleteCard={editCard} >Eliminar</Button> 
         </CardActions>
     </Card>
   );

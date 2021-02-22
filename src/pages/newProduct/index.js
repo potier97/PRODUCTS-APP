@@ -15,13 +15,14 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 //COMPONENTS
 import MuiTextField from '../../components/muiTextField';
 //AXIOS
-//import axios from 'axios';  
+import axios from 'axios';  
 //NAVEGATION
 import { useHistory, useParams } from "react-router-dom";  
 //Styles
 import useStyles from './style'
 
 const initialState = {
+  id: '',
   nameProduct: '',
   nameProductError: false,
   nameProductErrorMessage: '',
@@ -67,8 +68,26 @@ export default function newProduct() {
   }
 
   //CARGAR LOS DATOS PARA SER MODIFICADOS
-  const loadData = () => {
-    console.log('cargando datos')
+  const loadData = async () => {
+    try {
+      console.log('cargando datos')
+      const res = await axios.get('/api/loadProduct', {
+      idProduct: id,
+      })
+      console.log('Res', res)
+      // setstate(prevState => ({
+      //   ...prevState,
+      //   id: res._id,
+      //   nameProduct: res.nameProduct, 
+      //   idProduct: res.idProduct, 
+      //   count: res.count, 
+      //   mode: res.mode,
+      //   description: res.description,
+      //   activateProduct: res.activateProduct
+      // }))
+    } catch (e) {
+      console.log('Errror to load Product:', e)
+    }
   }
 
   //VOLVER A LA PANTALLA DE PRODUCTOS
@@ -173,10 +192,29 @@ export default function newProduct() {
       if(!validate){
         if(isNew) {
           console.log('es nuevo')
-
+          const res = await axios.post('/api/newProduct', {
+            nameProduct: state.nameProduct, 
+            idProduct: state.idProduct, 
+            count: state.count, 
+            mode: state.mode,
+            description: state.description,
+            activateProduct: state.activateProduct
+          })
+          console.log(res)
+          //await onChangeScreen();
         }else{
           console.log('esta actualizando')
-
+          const res = await axios.put('/api/editProduct', {
+            _id: id,
+            nameProduct: state.nameProduct, 
+            idProduct: state.idProduct, 
+            count: state.count, 
+            mode: state.mode,
+            description: state.description,
+            activateProduct: state.activateProduct
+          })
+          console.log(res)
+          await onChangeScreen();
         }
       }
     } catch (e) {

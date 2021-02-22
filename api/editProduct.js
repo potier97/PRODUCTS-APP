@@ -2,7 +2,7 @@ const MongoClient = require('mongodb').MongoClient
 const Cors = require('cors');
  
 const cors = Cors({
-  methods: ['POST', 'HEAD'], 
+  methods: ['PUT', 'HEAD'], 
   origin: 'https://products.nipoanz.com',
 })
  
@@ -31,11 +31,21 @@ export default async function connectToDatabase(uri) {
 module.exports = async (req, res) => { 
   try{
     await runMiddleware(req, res, cors) 
-    if(req.method === "POST"){
+    if(req.method === "PUT"){
       const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
+      const { _id, nameProduct, idProduct, count, mode, description, activateProduct } = req.body;
+      var myquery = { _id: _id };
+      var newvalues = { $set: {
+        name: nameProduct, 
+        id: idProduct, 
+        count: count, 
+        mode: mode,
+        description: description,
+        activateProduct: activateProduct
+      } };
       const collection = await db.collection('products')
-      const products = await collection.find({}).toArray()
-      res.status(200).json({ products, "error" : false })
+      const updateProduct = await collection.updateOne(myquery, newvalues) 
+      res.status(200).json({ updateProduct, "error" : false })
       res.end();
     }else{
       res.status(400).json({ "message": "Error Query", "error" : true});

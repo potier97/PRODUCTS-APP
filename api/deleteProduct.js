@@ -2,7 +2,7 @@ const MongoClient = require('mongodb').MongoClient
 const Cors = require('cors');
 
 const cors = Cors({
-  methods: ['POST', 'HEAD'], 
+  methods: ['DELETE', 'HEAD'], 
   origin: 'https://products.nipoanz.com',
 })
 
@@ -32,11 +32,12 @@ export default async function connectToDatabase(uri) {
 module.exports = async (req, res) => { 
   try{
     await runMiddleware(req, res, cors) 
-    if(req.method === "POST"){
+    if(req.method === "DELETE"){
       const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
+      const { _id } = req.body;
       const collection = await db.collection('products')
-      const products = await collection.find({}).toArray()
-      res.status(200).json({ products, "error" : false })
+      const deleteResponse = await collection.deleteOne({ _id: ObjectId(_id)  })
+      res.status(200).json({ deleteResponse, "error" : false })
       res.end();
     }else{
       res.status(400).json({ "message": "Error Query", "error" : true});

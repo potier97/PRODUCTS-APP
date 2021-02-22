@@ -32,9 +32,17 @@ module.exports = async (req, res) => {
     await runMiddleware(req, res, cors) 
     if(req.method === "POST"){
       const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
+      const { nameProduct, idProduct, count, mode, description, activateProduct} = req.body;
       const collection = await db.collection('products')
-      const products = await collection.find({}).toArray()
-      res.status(200).json({ products, "error" : false })
+      const newProducts = await collection.insert({ 
+        name: nameProduct, 
+        id: idProduct, 
+        count: count, 
+        mode: mode,
+        description: description,
+        activateProduct: activateProduct
+      })
+      res.status(200).json({ newProducts, "error" : false }); 
       res.end();
     }else{
       res.status(400).json({ "message": "Error Query", "error" : true});
