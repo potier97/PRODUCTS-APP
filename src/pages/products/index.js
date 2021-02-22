@@ -82,7 +82,7 @@ export default function Products(props) {
       });
 
     }catch(e){
-      console.log('Error to get users: ', e)
+      console.log('Error to delete users: ', e)
     }
   }
 

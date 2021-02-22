@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
     }
   }catch(e){
     console.log("Error:", e)
-    res.status(406).json({ "message": "The request cannot be answered properly", "error" : true, errorCode: e });
+    res.status(406).json({ "message": "The request cannot be answered properly", "error" : true, "errorCode": e });
     res.end();
   }
 }
