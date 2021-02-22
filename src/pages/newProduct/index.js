@@ -78,8 +78,8 @@ export default function newProduct() {
       setState(prevState => ({
         ...prevState,
         id: data._id,
-        nameProduct: data.nameProduct, 
-        idProduct: data.idProduct, 
+        nameProduct: data.name, 
+        idProduct: data.id, 
         count: data.count, 
         mode: data.mode,
         description: data.description,
