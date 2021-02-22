@@ -73,6 +73,7 @@ export default function newProduct() {
   const loadData = async () => {
     try {
       const res = await axios.post('/api/loadProduct', {  id: id, }) 
+      console.log(res)
       const data = await res.data.loadProduct
       setState(prevState => ({
         ...prevState,

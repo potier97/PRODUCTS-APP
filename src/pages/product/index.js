@@ -42,9 +42,7 @@ export default function Product() {
 
   const getData = async () => {
     try{
-      const res = await axios.post('/api/loadProduct', {
-        id: id,
-      })
+      const res = await axios.post('/api/loadProduct', { id: id, })
       const data = await res.data.loadProduct
       setstate({ 
         id: data._id, 
@@ -56,8 +54,7 @@ export default function Product() {
         activateProduct: data.activateProduct, 
 
        })
-      console.log('Res', res)
-
+      //console.log('Res', res)
     }catch(e){
       console.log('Error to get users: ', e)
     }
@@ -70,8 +67,7 @@ export default function Product() {
       <CssBaseline />
       <AppBar 
         color="secondary" 
-        position="sticky" 
-        //className={classes.appBar}
+        position="sticky"  
         elevation={8}>
         <Toolbar className={classes.toolbar} id="back-to-top-anchor">
 

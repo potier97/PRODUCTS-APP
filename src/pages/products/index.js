@@ -51,7 +51,7 @@ export default function Products(props) {
     try{
       const res = await axios.get('/api/products')
       const data = await res.data.products
-      console.log('res', data)
+      //console.log('res', data)
       setstate(data)
       console.log('search', search)
     }catch(e){
