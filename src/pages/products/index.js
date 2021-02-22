@@ -55,10 +55,8 @@ export default function Products(props) {
   const getData = async () => {
     try{
       const res = await axios.get('/api/products')
-      const data = await res.data.products
-      //console.log('res', data)
-      setstate(data)
-      console.log('search', search)
+      const data = await res.data.products 
+      setstate(data) 
     }catch(e){
       console.log('Error to get users: ', e)
     }
@@ -103,8 +101,8 @@ export default function Products(props) {
         if(search.length > 0){
           const res = await axios.post('/api/searchProduct', { filter: filter, query: search })
           const data = await res.data.products 
-          console.log(data)
-          //setstate(data)
+          //console.log(data)
+          setstate(data)
           setSearch('')
         }else{
           await getData()
