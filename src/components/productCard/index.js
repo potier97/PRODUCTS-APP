@@ -33,9 +33,9 @@ export default function productCard(props) {
           title={name} />
         <CardContent>
           <Typography gutterBottom noWrap variant="h5" component="h2" className={classes.textDots}>{name}</Typography>
-          <Typography gutterBottom noWrap variant="h6" component="h2" className={classes.textDots}>{`Cantidad: ${amount}`}</Typography>
+          {/* <Typography gutterBottom noWrap variant="h6" component="h2" className={classes.textDots}>{`Cantidad: ${amount}`}</Typography> */}
+          <Typography gutterBottom noWrap variant="body1" component="h3" className={classes.textDots}>{`RI: ${record}`}</Typography>
           {/* <Typography gutterBottom noWrap variant="h6" component="h2" className={classes.textDots}>{`Presentación: ${mode}`}</Typography> */}
-          {/* <Typography gutterBottom noWrap variant="body1" component="h3" className={classes.textDots}>{`RI: ${record}`}</Typography> */}
           <Typography gutterBottom noWrap variant="body1" component="h3" className={classes.textDots}>{`Disponibilidad: ${disponible === 'activo' ? 'Si' : 'No'}`}</Typography>
           <Typography noWrap variant="body2" color="textSecondary" component="p" className={classes.textDots}>{description}</Typography>
          
