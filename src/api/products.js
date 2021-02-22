@@ -17,8 +17,8 @@ async function connectToDatabase(uri) {
 
   // Select the database through the connection,
   // using the database path of the connection string
-  const db = await client.db(url.parse(uri).pathname.substr(1))
-  //const db = await client.db('NutryProducts')
+  //const db = await client.db(url.parse(uri).pathname.substr(1))
+  const db = await client.db('NutryProducts')
 
   // Cache the database connection and return the connection
   cachedDb = db

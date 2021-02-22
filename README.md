@@ -1,21 +1,27 @@
-![React Logo](https://github.com/vercel/vercel/blob/master/packages/frameworks/logos/react.svg)
+# PRODUCTS - APP
 
-# React Example
+![Products Logo](src/assets/images/logo.png)
 
-This directory is a brief example of a [React](https://reactjs.org/) app with [Serverless Functions](https://vercel.com/docs/v2/serverless-functions/introduction) that can be deployed with Vercel and zero configuration.
+Este proyecto consiste en una lista de productos medicos provenientes de [Nutribotics](https://nutrabiotics.info/productos/), en el que se puede ver cada uno de estos, se pueden crear nuevos productos y editarlos, asi mismo se puede realizar una pequeña busqueda de esto para encontrar el producto deseado y poder apreciar su información. Esta app se realiza de acuerdo a los lineamientos dados, asi mismo es diseñada de acuerdo a los colores de la Marca [Nutribotics](https://nutrabiotics.info/) como se puede ver en la siguiente imagen.
 
-## Deploy Your Own
 
-Deploy your own React project, along with Serverless Functions, with Vercel.
+![Colores App](src/assets/images/colors.png)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/vercel/tree/master/examples/create-react-app-functions)
 
-_Live Example: https://create-react-app.now-examples.now.sh/_
+Esta app consiste de 5 pantallas que consisten en: 
 
-### How We Created This Example
+  - [HomeScreen](https://products.nipoanz.com/)
+  - [Productos](https://products.nipoanz.com/products)
+  - [Información del Producto](https://products.nipoanz.com/product)
+  - [404](https://products.nipoanz.com/404)
+  - [Editar o Crear Producto](https://products.nipoanz.com/newProduct)
+ 
 
-To get started with React, along with [Serverless Functions](https://vercel.com/docs/v2/serverless-functions/introduction), with Vercel, you can use the [Create-React-App CLI](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app) to initialize the project:
 
-```shell
-$ npx create-react-app my-app
-```
+Las tecnologías utilizadas para esta app son:
+
+   - React
+   - React-Router-Dom
+   - MongoDB
+   - Axios
+   - Material-UI
