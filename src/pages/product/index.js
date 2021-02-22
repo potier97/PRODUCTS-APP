@@ -45,6 +45,7 @@ export default function Product() {
       const res = await axios.post('/api/loadProduct', {
         id: id,
       })
+      const data = await res.loadProduct
       setstate({ 
         id: 'dfvdfvdfv', 
         nameProduct: 'sdcsdc',
@@ -55,7 +56,7 @@ export default function Product() {
         activateProduct: 'activo', 
 
        })
-      console.log('Res', res)
+      console.log('Res', res, data)
 
     }catch(e){
       console.log('Error to get users: ', e)

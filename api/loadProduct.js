@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
       const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
       const { id } = req.body;
       const collection = await db.collection('products') 
-      const loadProduct = await collection.findOne({ _id: id })
+      const loadProduct = await collection.findOne({ _id:  ObjectId(id) })
       res.status(200).json({ loadProduct, "error" : false })
       res.end();
     }else{
