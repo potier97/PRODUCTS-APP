@@ -1,11 +1,19 @@
 const connectToDatabase = require('../mongoConnect');
 const Cors = require('cors');
-const runMiddleware = require('../middleware');
 
 const cors = Cors({
   methods: ['POST', 'HEAD'], 
   origin: 'https://products.nipoanz.com',
 })
+
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+      fn(req, res, (result) => {
+      if (result instanceof Error) return reject(result)
+      return resolve(result)
+      })
+  })
+}
  
 
 module.exports = async (req, res) => { 
