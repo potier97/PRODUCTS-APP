@@ -1,4 +1,4 @@
-const connectToDatabase = require('../mongoConnect');
+const MongoClient = require('mongodb').MongoClient
 const Cors = require('cors');
 
 const cors = Cors({
@@ -14,6 +14,18 @@ function runMiddleware(req, res, fn) {
       return resolve(result)
       })
   })
+}
+
+let cachedDb = null
+ 
+export default async function connectToDatabase(uri) {
+  if (cachedDb) return cachedDb
+
+  const client = await MongoClient.connect(uri, { useNewUrlParser: true })
+
+  const db = await client.db('NutryProducts')
+  cachedDb = db
+  return db
 }
  
 
@@ -32,7 +44,7 @@ module.exports = async (req, res) => {
     }
   }catch(e){
     console.log("Error:", e)
-    res.status(406).json({ "message": "The request cannot be answered properly", "error" : true });
+    res.status(406).json({ "message": "The request cannot be answered properly", "error" : true, errorCode: e });
     res.end();
   }
 }
