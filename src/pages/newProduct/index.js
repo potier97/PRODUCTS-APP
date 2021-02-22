@@ -73,7 +73,7 @@ export default function newProduct() {
   const loadData = async () => {
     try {
       const res = await axios.post('/api/loadProduct', {  id: id, }) 
-      console.log(res)
+      //console.log(res)
       const data = await res.data.loadProduct
       setState(prevState => ({
         ...prevState,
@@ -222,7 +222,7 @@ export default function newProduct() {
             description: state.description,
             activateProduct: state.activateProduct
           })
-          console.log(res)
+          //console.log(res)
           if(res.status === 200){
             enqueueSnackbar('Producto Editado', { 
               variant: 'info',  

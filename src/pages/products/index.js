@@ -71,7 +71,7 @@ export default function Products(props) {
 
   const onDeleteProduct = async e => {
     try{
-      const res = await axios.delete('/api/deleteProduct', { id: e}) 
+      const res = await axios.get('/api/deleteProduct', { id: e}) 
       console.log('Res', res)
       enqueueSnackbar('Producto Eliminado', { 
         variant: 'error',

@@ -3,7 +3,7 @@ var ObjectId = require('mongodb').ObjectID;
 const Cors = require('cors');
 
 const cors = Cors({
-  methods: ['DELETE', 'HEAD'], 
+  methods: ['GET', 'HEAD'], 
   origin: 'https://products.nipoanz.com',
 })
 
@@ -33,7 +33,7 @@ export default async function connectToDatabase(uri) {
 module.exports = async (req, res) => { 
   try{
     await runMiddleware(req, res, cors) 
-    if(req.method === "DELETE"){
+    if(req.method === "GET"){
       const db = await connectToDatabase(process.env.REACT_APP_MONGODB_URI)
       const { id } = req.body;
       const collection = await db.collection('products')
