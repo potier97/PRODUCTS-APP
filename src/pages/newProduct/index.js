@@ -70,9 +70,8 @@ export default function newProduct() {
   //CARGAR LOS DATOS PARA SER MODIFICADOS
   const loadData = async () => {
     try {
-      console.log('cargando datos')
       const res = await axios.get('/api/loadProduct', {
-      idProduct: id,
+        idProduct: id,
       })
       console.log('Res', res)
       // setstate(prevState => ({
