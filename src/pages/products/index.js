@@ -72,24 +72,32 @@ export default function Products(props) {
   const onChangeText = e => {
     const searchInput = e.target.value
     setSearch(searchInput)
-    console.log('searchInput', searchInput, e)
+    //console.log('searchInput', searchInput, e)
 
-    if(filter === 'nombre'){
-      setstate(prevState => ({
-        ...prevState, 
-        products: prevState.copyProducts.filter(p => p.name.toLowerCase().indexOf(searchInput.toLowerCase()) >  -1),
-      }))
-    }else if(filter === 'presentación'){
-      setstate(prevState => ({
-        ...prevState, 
-        products: prevState.copyProducts.filter(p => p.mode.toLowerCase().indexOf(searchInput.toLowerCase()) >  -1),
-      }))
+    if(searchInput.length > 0){
+      if(filter === 'nombre'){
+        setstate(prevState => ({
+          ...prevState, 
+          products: prevState.copyProducts.filter(p => p.name.toLowerCase().indexOf(searchInput.toLowerCase()) >  -1),
+        }))
+      }else if(filter === 'presentación'){
+        setstate(prevState => ({
+          ...prevState, 
+          products: prevState.copyProducts.filter(p => p.mode.toLowerCase().indexOf(searchInput.toLowerCase()) >  -1),
+        }))
+      }else{
+        setstate(prevState => ({
+          ...prevState, 
+          products: prevState.copyProducts.filter(p => p.id.toLowerCase().indexOf(searchInput.toLowerCase()) >  -1),
+        }))
+      }
     }else{
       setstate(prevState => ({
         ...prevState, 
-        products: prevState.copyProducts.filter(p => p.id.toLowerCase().indexOf(searchInput.toLowerCase()) >  -1),
+        products: [],
       }))
-    }  
+    }
+      
   }
 
 
