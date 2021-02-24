@@ -3,10 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     fontWeight: "bold",
-    color: "#fff", 
+    color: "#fff",
     display: "flex",
-    height: "100%", 
-    boxSizing: 'border-box',
+    height: "100%",
+    boxSizing: "border-box",
   },
   backdrop: {
     width: "100%",
@@ -23,10 +23,10 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 3,
     display: "grid",
     flexDirection: "column",
-    alignItems: 'center',
+    alignItems: "center",
     justifyContent: "center",
     //backgroundColor: "red",
-  }, 
+  },
   video: {
     minWidth: "100%",
     width: "100%",
@@ -38,15 +38,18 @@ const useStyles = makeStyles((theme) => ({
     objectFit: "cover",
     display: "flex",
   },
-  link:{ 
-    color: '#520386',
-    cursor: 'pointer',
-    textDecoration: 'none',
-    '&:hover': { 
-      color: '#8241cf',
-      textDecoration: 'underline',
-  } 
-  }
-  
+  link: {
+    color: "#520386",
+    cursor: "pointer",
+    textDecoration: "none",
+    "&:hover": {
+      color: "#8241cf",
+      textDecoration: "underline",
+    },
+  },
+  buttonContainer: {
+    marginBottom: 6,
+    marginTop: 3,
+  },
 }));
 export default useStyles;

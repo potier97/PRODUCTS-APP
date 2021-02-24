@@ -35,6 +35,7 @@ export default function Home() {
             >Nutrabiotics</a> 
           </h1>
           <Grid item xs={8} 
+              className={classes.buttonContainer}
               container
               direction="column"
               justify="center"
@@ -46,6 +47,7 @@ export default function Home() {
             >IR</Button>
           </Grid>
           <Grid item xs={8} 
+              className={classes.buttonContainer}
               container
               direction="column"
               justify="center"
