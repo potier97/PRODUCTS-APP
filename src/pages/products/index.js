@@ -70,21 +70,24 @@ export default function Products(props) {
 
   //Buscar Productos
   const onChangeText = e => {
-    setSearch(e.target.value)
+    const searchInput = e.target.value
+    setSearch(searchInput)
+    console.log('searchInput', searchInput, e)
+
     if(filter === 'nombre'){
       setstate(prevState => ({
         ...prevState, 
-        products: prevState.copyProducts.filter(p => p.name.toLowerCase().indexOf(e.target.value.toLowerCase()) >  -1  ),
+        products: prevState.copyProducts.filter(p => p.name.toLowerCase().indexOf(searchInput.toLowerCase()) >  -1),
       }))
     }else if(filter === 'presentación'){
       setstate(prevState => ({
         ...prevState, 
-        products: prevState.copyProducts.filter(p => p.mode.toLowerCase().indexOf(e.target.value.toLowerCase()) >  -1  ),
+        products: prevState.copyProducts.filter(p => p.mode.toLowerCase().indexOf(searchInput.toLowerCase()) >  -1),
       }))
     }else{
       setstate(prevState => ({
         ...prevState, 
-        products: prevState.copyProducts.filter(p => p.id.toLowerCase().indexOf(e.target.value.toLowerCase()) >  -1  ),
+        products: prevState.copyProducts.filter(p => p.id.toLowerCase().indexOf(searchInput.toLowerCase()) >  -1),
       }))
     }  
   }
