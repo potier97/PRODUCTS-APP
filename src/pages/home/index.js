@@ -17,6 +17,8 @@ export default function Home() {
 
   const onChangeScreen = () => history.push('products')
 
+  const onNewProduct = () => history.push('newProduct/new')
+
   return (    
     <Grid aling='center' className={classes.root}>
       <video autoPlay loop muted id="videoCidu" className={classes.video} src={medicine} type="video/mp4"/>   
@@ -42,6 +44,17 @@ export default function Home() {
             variant="contained" 
             color='secondary' 
             >IR</Button>
+          </Grid>
+          <Grid item xs={8} 
+              container
+              direction="column"
+              justify="center"
+              alignItems="stretch"> 
+          <Button 
+            onClick={onNewProduct} 
+            variant="contained" 
+            color='primary' 
+            >AGREGAR NUEVO PRODUCTO</Button>
           </Grid>
         </Grid>
       </Container>
