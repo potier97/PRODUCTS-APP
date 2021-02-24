@@ -16,9 +16,9 @@ import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'; 
-import AddIcon from '@material-ui/icons/Add';
+//import AddIcon from '@material-ui/icons/Add';
 import Logo from '../../assets/images/logo.png' 
-import { useSnackbar } from 'notistack';
+//import { useSnackbar } from 'notistack';
 //components
 import ScrollTop from '../../components/scrollTop';
 import ProductCard from '../../components/productCard'
@@ -41,9 +41,12 @@ export default function Products(props) {
   //HOOK NAVIGATION 
   const history = useHistory();
   const theme = useTheme();
-  const { enqueueSnackbar } = useSnackbar();
+  //const { enqueueSnackbar } = useSnackbar();
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm')); 
-  const [state, setstate] = useState([])
+  const [state, setstate] = useState({
+    products: [],
+    copyProducts: []
+  }) 
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('nombre')
 
@@ -56,62 +59,93 @@ export default function Products(props) {
     try{
       const res = await axios.get('/api/products')
       const data = await res.data.products 
-      setstate(data) 
+      setstate(prevState => ({
+        ...prevState, 
+        copyProducts: data
+      })) 
     }catch(e){
       console.log('Error to get users: ', e)
     }
   }
 
-  const onChangeText = e => setSearch(e.target.value)
-  
-  const onChangeFilter = e => setFilter(e.target.value)
-
-  const onChangeScreen = () => history.push('newProduct/new')
-
-  const onViewProduct = e => history.push({ pathname: `/product/${e}` })
-
-  const onEditProduct = e => history.push({ pathname: `/newProduct/${e}` })
-
-
-  const onDeleteProduct = async e => {
-    try{
-      const id = e 
-      const res = await axios.post('/api/deleteProduct', { id: id}) 
-      //const data = await res.data
-      //console.log('Res', data, data)
-      if(res.status === 200){
-        enqueueSnackbar('Producto Eliminado', { 
-          variant: 'error',
-          anchorOrigin: {
-            vertical: 'top',
-            horizontal: 'center',
-          }
-        });
-        await getData()
-      }
-    }catch(e){
-      console.log('Error to delete users: ', e)
-    }
+  //Buscar Productos
+  const onChangeText = e => {
+    setSearch(e.target.value)
+    if(filter === 'nombre'){
+      setstate(prevState => ({
+        ...prevState, 
+        products: prevState.copyProducts.filter(p => p.name.toLowerCase().indexOf(e.target.value.toLowerCase()) >  -1  ),
+      }))
+    }else if(filter === 'presentación'){
+      setstate(prevState => ({
+        ...prevState, 
+        products: prevState.copyProducts.filter(p => p.mode.toLowerCase().indexOf(e.target.value.toLowerCase()) >  -1  ),
+      }))
+    }else{
+      setstate(prevState => ({
+        ...prevState, 
+        products: prevState.copyProducts.filter(p => p.id.toLowerCase().indexOf(e.target.value.toLowerCase()) >  -1  ),
+      }))
+    }  
   }
 
 
-  const handleSearch = async (e) => {
-    try { 
-      if (e.key === "Enter") { 
-        if(search.length > 0){
-          const res = await axios.post('/api/searchProduct', { filter: filter, query: search })
-          const data = await res.data.products 
-          //console.log(data)
-          setstate(data)
-          setSearch('')
-        }else{
-          await getData()
-        }
-      }
-    }catch (error) {
-      console.log('Error to find products: ', error)
-    }
-  }; 
+  const resetSearchInput = () => {
+    setSearch('')
+    setstate(prevState => ({
+      ...prevState, 
+      products: [],
+    }))
+  }
+  
+  const onChangeFilter = e => setFilter(e.target.value)
+
+  //const onChangeScreen = () => history.push('newProduct/new')
+
+  const onViewProduct = e => history.push({ pathname: `/product/${e}` })
+
+  //const onEditProduct = e => history.push({ pathname: `/newProduct/${e}` })
+
+
+  // const onDeleteProduct = async e => {
+  //   try{
+  //     const id = e 
+  //     const res = await axios.post('/api/deleteProduct', { id: id}) 
+  //     //const data = await res.data
+  //     //console.log('Res', data, data)
+  //     if(res.status === 200){
+  //       enqueueSnackbar('Producto Eliminado', { 
+  //         variant: 'error',
+  //         anchorOrigin: {
+  //           vertical: 'top',
+  //           horizontal: 'center',
+  //         }
+  //       });
+  //       await getData()
+  //     }
+  //   }catch(e){
+  //     console.log('Error to delete users: ', e)
+  //   }
+  // }
+
+
+  // const handleSearch = async (e) => {
+  //   try { 
+  //     if (e.key === "Enter") { 
+  //       if(search.length > 0){
+  //         const res = await axios.post('/api/searchProduct', { filter: filter, query: search })
+  //         const data = await res.data.products 
+  //         //console.log(data)
+  //         setstate(data)
+  //         setSearch('')
+  //       }else{
+  //         await getData()
+  //       }
+  //     }
+  //   }catch (error) {
+  //     console.log('Error to find products: ', error)
+  //   }
+  // }; 
 
   return (
     <div className={classes.root}>
@@ -133,7 +167,7 @@ export default function Products(props) {
                     root: classes.inputRoot,
                     input: classes.inputInput,
                   }}
-                  onKeyPress={handleSearch}
+                  //onKeyPress={handleSearch}
                   value={search}
                   onChange={onChangeText}
                   inputProps={{ 'aria-label': 'search' }}
@@ -142,7 +176,7 @@ export default function Products(props) {
             </Grid>
 
             <Grid item  xs={4}  container direction="row" justify="flex-end" alignItems="center">
-              <IconButton onClick={getData} className={classes.resetIcon}>
+              <IconButton onClick={resetSearchInput} className={classes.resetIcon}>
                 <RotateLeftIcon />
               </IconButton>
               <Typography  noWrap variant="h6" component="h1" className={classes.tittle}>
@@ -160,7 +194,7 @@ export default function Products(props) {
                     root: classes.inputRoot,
                     input: classes.inputInput,
                   }}
-                  onKeyPress={handleSearch}
+                  //onKeyPress={handleSearch}
                   value={search}
                   onChange={onChangeText}
                   inputProps={{ 'aria-label': 'search' }}
@@ -168,7 +202,7 @@ export default function Products(props) {
               </div>
             </Grid>
             <Grid item xs={2} >
-              <IconButton onClick={getData} className={classes.resetIcon}>
+              <IconButton onClick={resetSearchInput} className={classes.resetIcon}>
                <RotateLeftIcon />
               </IconButton>
             </Grid>
@@ -195,7 +229,7 @@ export default function Products(props) {
 
           {/* <div>hola mundo</div>  */} 
           <Grid container spacing={3} className={classes.containerProducts}>
-            {state.map((product, index) => 
+            {state.products.map((product, index) => 
               <Grid item key={index} xs={12} sm={6} md={4}>
                 <Grid container>
                   <ProductCard 
@@ -206,8 +240,8 @@ export default function Products(props) {
                     disponible={product.activateProduct}
                     description={product.description}
                     openCard={() => onViewProduct(product._id)}
-                    editCard={() => onEditProduct(product._id)}
-                    deleteCard={() => onDeleteProduct(product._id)}
+                    //editCard={() => onEditProduct(product._id)}
+                    //deleteCard={() => onDeleteProduct(product._id)}
                   />
                 </Grid>
               </Grid>
@@ -217,9 +251,9 @@ export default function Products(props) {
 
 
         </Container>
-        <Fab color="secondary" size="large" className={classes.plus} onClick={onChangeScreen}>
+        {/* <Fab color="secondary" size="large" className={classes.plus} onClick={onChangeScreen}>
           <AddIcon />
-        </Fab>
+        </Fab> */}
       </main>
 
 

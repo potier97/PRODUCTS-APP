@@ -14,8 +14,8 @@ export default function productCard(props) {
   const classes = useStyles();
   const {
     openCard,
-    editCard,
-    deleteCard,
+    //editCard,
+    //deleteCard,
     name= 'Medicina A',
     //amount= 3,
     description= 'Lorem Ipsum Dolor fen',
@@ -42,8 +42,8 @@ export default function productCard(props) {
         </CardContent>
       <CardActions>
           <Button size="small" color="primary" variant="contained" onClick={openCard} >Saber Más</Button> 
-          <Button size="small" color="primary" variant="contained" onClick={editCard} >Editar</Button> 
-          <Button size="small" color="warning" variant="contained" onClick={deleteCard} >Eliminar</Button> 
+          {/* <Button size="small" color="primary" variant="contained" onClick={editCard} >Editar</Button>  */}
+          {/* <Button size="small" color="warning" variant="contained" onClick={deleteCard} >Eliminar</Button>  */}
         </CardActions>
     </Card>
   );
