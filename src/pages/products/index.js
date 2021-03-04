@@ -16,7 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'; 
-//import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Add';
 import Logo from '../../assets/images/logo.png' 
 //import { useSnackbar } from 'notistack';
 //components
@@ -61,7 +61,8 @@ export default function Products(props) {
       const data = await res.data.products 
       setstate(prevState => ({
         ...prevState, 
-        copyProducts: data
+        copyProducts: data,
+        products: data,
       })) 
     }catch(e){
       console.log('Error to get users: ', e)
@@ -94,7 +95,7 @@ export default function Products(props) {
     }else{
       setstate(prevState => ({
         ...prevState, 
-        products: [],
+        products: prevState.copyProducts,
       }))
     }
       
@@ -105,17 +106,17 @@ export default function Products(props) {
     setSearch('')
     setstate(prevState => ({
       ...prevState, 
-      products: [],
+      products: prevState.copyProducts,
     }))
   }
   
   const onChangeFilter = e => setFilter(e.target.value)
 
-  //const onChangeScreen = () => history.push('newProduct/new')
+  const onChangeScreen = () => history.push('newProduct/new')
 
   const onViewProduct = e => history.push({ pathname: `/product/${e}` })
 
-  //const onEditProduct = e => history.push({ pathname: `/newProduct/${e}` })
+  const onEditProduct = e => history.push({ pathname: `/newProduct/${e}` })
 
 
   // const onDeleteProduct = async e => {
@@ -137,26 +138,7 @@ export default function Products(props) {
   //   }catch(e){
   //     console.log('Error to delete users: ', e)
   //   }
-  // }
-
-
-  // const handleSearch = async (e) => {
-  //   try { 
-  //     if (e.key === "Enter") { 
-  //       if(search.length > 0){
-  //         const res = await axios.post('/api/searchProduct', { filter: filter, query: search })
-  //         const data = await res.data.products 
-  //         //console.log(data)
-  //         setstate(data)
-  //         setSearch('')
-  //       }else{
-  //         await getData()
-  //       }
-  //     }
-  //   }catch (error) {
-  //     console.log('Error to find products: ', error)
-  //   }
-  // }; 
+  // } 
 
   return (
     <div className={classes.root}>
@@ -177,8 +159,7 @@ export default function Products(props) {
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,
-                  }}
-                  //onKeyPress={handleSearch}
+                  }} 
                   value={search}
                   onChange={onChangeText}
                   inputProps={{ 'aria-label': 'search' }}
@@ -204,8 +185,7 @@ export default function Products(props) {
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,
-                  }}
-                  //onKeyPress={handleSearch}
+                  }} 
                   value={search}
                   onChange={onChangeText}
                   inputProps={{ 'aria-label': 'search' }}
@@ -251,7 +231,7 @@ export default function Products(props) {
                     disponible={product.activateProduct}
                     description={product.description}
                     openCard={() => onViewProduct(product._id)}
-                    //editCard={() => onEditProduct(product._id)}
+                    editCard={() => onEditProduct(product._id)}
                     //deleteCard={() => onDeleteProduct(product._id)}
                   />
                 </Grid>
@@ -262,9 +242,9 @@ export default function Products(props) {
 
 
         </Container>
-        {/* <Fab color="secondary" size="large" className={classes.plus} onClick={onChangeScreen}>
+        <Fab color="secondary" size="large" className={classes.plus} onClick={onChangeScreen}>
           <AddIcon />
-        </Fab> */}
+        </Fab>
       </main>
 
 
